@@ -1,4 +1,4 @@
-package ru.netology.delivery.data;
+package ru.netology.delivery.test;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
-
+import ru.netology.delivery.data.DataGenerator;
 
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
@@ -23,7 +23,7 @@ public class DeliveryTest {
     void shouldSuccessfulPlanAndReplanMeeting() {
         var daysToAddForFirstMeeting = 4;
         var firstMeetingDate = DataGenerator.generateDate(daysToAddForFirstMeeting);
-        var daysToAddForSecondMeeting =7;
+        var daysToAddForSecondMeeting = 7;
         var secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
 
         SelenideElement form = $("[.form]");
@@ -35,7 +35,7 @@ public class DeliveryTest {
         form.$("[data-test-id=phone] input").setValue("+7" + DataGenerator.generatePhone());
         form.$(".checkbox__box").click();
         form.$(".button__text").click();
-        $(withText ("Успешно!")).should(Condition.visible);
+        $(withText("Успешно!")).should(Condition.visible);
         $(".notification__content").should(Condition.text("Встреча успешно запланирована на " + firstMeetingDate)).should(Condition.visible);
 
         form.$("[data-test-id=date] input").doubleClick().sendKeys(Keys.DELETE);
@@ -45,9 +45,10 @@ public class DeliveryTest {
         $$(".button__text").find(Condition.exactText("Перепланировать")).click();
         $(withText("Успешно!")).should(Condition.visible);
         $(".notification__content").should(Condition.text("Встреча успешно запланирована на " + secondMeetingDate)).should(Condition.visible);
-
     }
 }
+
+
 
 
 
